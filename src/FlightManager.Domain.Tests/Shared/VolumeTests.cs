@@ -26,7 +26,6 @@ namespace FlightManager.Domain.Tests.Shared
             // Assert
             volume.Should().NotBeNull();
             volume.Litres.Should().Be(litres);
-            volume.Litres.Should().Be(volume.Gallons / 0.264);
         }
 
         [Fact]
@@ -41,22 +40,6 @@ namespace FlightManager.Domain.Tests.Shared
             // Assert
             volume.Should().NotBeNull();
             volume.Litres.Should().Be(litres);
-            volume.Litres.Should().Be(volume.Gallons / 0.264);
-        }
-
-        [Fact]
-        public void InitializeVolume_FromGallonsFactory_Success()
-        {
-            // Arrange
-            var gallons = _fixture.Create<double>();
-
-            // Act
-            var volume = Volume.FromGallons(gallons);
-
-            // Assert
-            volume.Should().NotBeNull();
-            volume.Gallons.Should().Be(gallons);
-            volume.Gallons.Should().Be(volume.Litres * 0.264);
         }
     }
 }
