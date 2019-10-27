@@ -1,4 +1,4 @@
-# Flight Manager
+# Flight Manager [![Build status](https://img.shields.io/appveyor/ci/plneto/FlightManager.svg)](https://ci.appveyor.com/project/plneto/FlightManager/branch/master) [![Test status](https://img.shields.io/appveyor/tests/plneto/FlightManager.svg)](https://ci.appveyor.com/project/plneto/FlightManager/branch/master)
 
 Demo website: https://flight-manager.azurewebsites.net/
 
