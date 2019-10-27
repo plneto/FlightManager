@@ -3,10 +3,10 @@ version: 1.0.{build}
 image: Visual Studio 2019
 
 before_build:
-    - dotnet restore ".\src\FligthtManager.sln"
+    - dotnet restore ".\src\FlightManager.sln"
 
 build_script:
-    - dotnet build ".\src\FligthtManager.sln"
+    - dotnet build ".\src\FlightManager.sln"
 
 test_script:
-    - dotnet test ".\src\FligthtManager.sln"
+    - dotnet test ".\src\FlightManager.sln"
