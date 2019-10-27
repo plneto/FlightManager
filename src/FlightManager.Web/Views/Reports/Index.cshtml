@@ -1,0 +1,54 @@
+﻿@using FlightManager.Common.Extensions
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Core.Common
+@model FlightManager.Web.Models.ReportViewModel
+
+@{
+    ViewData["Title"] = "Activity Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Activity Report</h1>
+<h5>(Ordered from Newest to Oldest)</h5>
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>
+                Message
+            </th>
+            <th>
+                Message Data
+            </th>
+            <th>
+                Created At
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ReportItems)
+        {
+            <tr>
+                <td>
+                    @item.Message
+                </td>
+                <td>
+                    @item.MessageData.ToJson()
+                </td>
+                <td>
+                    @item.CreatedAt
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="d-flex justify-content-center">
+    @Html.PagedListPager((IPagedList)Model.ReportItems, page => Url.Action("Index", new { page = page }),
+        new PagedListRenderOptions
+        {
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" }
+        })
+</div>

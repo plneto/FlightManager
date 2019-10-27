@@ -1,0 +1,12 @@
+version: 10.0.{build}
+
+image: Visual Studio 2019
+
+before_build:
+    - dotnet restore ".\src\FileReader.sln"
+
+build_script:
+    - dotnet build ".\src\FileReader.sln"
+
+test_script:
+    - dotnet test ".\src\FileReader.sln"

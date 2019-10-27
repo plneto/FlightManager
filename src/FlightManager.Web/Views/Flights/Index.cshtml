@@ -1,0 +1,111 @@
+﻿@using FlightManager.Web.Constants
+@using FlightManager.Web.Extensions
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Core.Common
+@model IEnumerable<FlightManager.Web.Models.FlightViewModel>
+
+@{
+    ViewData["Title"] = "Flights";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var flightCreatedMessage = TempData[nameof(DefaultMessages.FlightCreatedMessage)];
+    var flightUpdatedMessage = TempData[nameof(DefaultMessages.FlightUpdatedMessage)];
+    var flightDeletedMessage = TempData[nameof(DefaultMessages.FlightDeletedMessage)];
+
+    if (flightCreatedMessage != null)
+    {
+        <div class="alert alert-success">@flightCreatedMessage</div>
+    }
+
+    if (flightUpdatedMessage != null)
+    {
+        <div class="alert alert-success">@flightUpdatedMessage</div>
+    }
+
+    if (flightDeletedMessage != null)
+    {
+        <div class="alert alert-success">@flightDeletedMessage</div>
+    }
+}
+
+<h1>Flights</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>
+                Departure Airport
+            </th>
+            <th>
+                Destination Airport
+            </th>
+            <th>
+                Distance
+            </th>
+            <th>
+                Duration
+            </th>
+            <th>
+                Fuel Required
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.DepartureAirport
+                </td>
+                <td>
+                    @item.DestinationAirport
+                </td>
+                <td>
+                    @Math.Round(item.DistanceInKilometers, 2, MidpointRounding.AwayFromZero) KM
+                </td>
+                <td>
+                    @item.FlightDuration.ToTotalHoursAndMinutesFormat() Hours
+                </td>
+                <td>
+                    @Math.Ceiling(item.FuelRequiredInLitres) Litres
+                </td>
+                <td>
+                    @Html.ActionLink(
+                        "Edit",
+                        "Edit",
+                        new { id = item.Id },
+                        new
+                        {
+                            @class = "btn btn-sm btn-secondary",
+                        }) |
+
+                    @Html.ActionLink(
+                        "Delete",
+                        "Delete",
+                        new { id = item.Id },
+                        new
+                        {
+                            @class = "btn btn-sm btn-danger",
+                            onclick = "return confirm('Are you sure you want to delete this flight?');"
+                        })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="d-flex justify-content-center">
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page }),
+        new PagedListRenderOptions
+        {
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" }
+        })
+</div>
